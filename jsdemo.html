@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="demo">
+	<head>
+		<meta charset="utf-8">
+		<title>jsdemo</title>
+		<meta name="description" content="">
+		<meta name="author" content="gel">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script>
+			var myApp = angular.module("demo", []);
+			myApp.controller("demoCtrl", function($scope, $http) {
+				var promise = $http.get("todo.json").success(function(data) {
+					var toJsonString = angular.toJson(data);
+					console.log(toJsonString);
+					$scope.todos = angular.fromJson(toJsonString);
+				});
+			});
+		</script>
+	</head>
+	<body ng-controller="demoCtrl">
+		<div class="panel">
+			<h1>To Do</h1>
+			<table class="table">
+				<tr>
+					<td>Action</td><td>Done</td>
+				</tr>
+				<tr ng-repeat="item in todos">
+					<td>{{item.action}}</td>
+					<td>{{item.done}}</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
